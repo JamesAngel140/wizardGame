@@ -3,12 +3,15 @@ import java.awt.*;
 public class Bullet extends GameObject{
 
     public Handler handler;
+    public double velocity = 1;
 
 
     public Bullet(int x, int y, ID id, Handler handler, int mx, int my) {
         super(x, y, id);
         this.handler = handler;
 
+        //velX = (float) Math.sqrt((velocity*velocity)-((y-my)*(y-my)));
+        //velY = (float) Math.sqrt((velocity*velocity)-((x-mx)*(x-mx)));
         velX = (mx-x)/10;
         velY = (my-y)/10;
     }

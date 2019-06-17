@@ -12,8 +12,8 @@ public class Wizard extends GameObject {
     public Wizard(int x, int y, ID id, Handler handler) {
         super(x, y, id);
         this.handler = handler;
-        this.idle = new Animation(10,"/knight_idle_spritesheet.png", 6, 16, 16);
-        this.walk = new Animation(10, "/knight_run_spritesheet.png", 6, 16,16);
+        this.idle = new Animation(5,"/knight_idle_spritesheet.png", 6, 16, 16);
+        this.walk = new Animation(5, "/knight_run_spritesheet.png", 6, 16,16);
     }
 
     public void tick() {
@@ -35,6 +35,9 @@ public class Wizard extends GameObject {
 
         if(handler.isLeft()) velX = -5;
         else if(!handler.isRight()) velX = 0;
+
+        walk.runAnimation();
+        idle.runAnimation();
     }
 
     private void collision()
@@ -54,12 +57,19 @@ public class Wizard extends GameObject {
     }
 
     public void render(Graphics g) {
-        if(handler.isDown() || handler.isLeft() || handler.isRight() || handler.isUp())
+        if(handler.isLeft())
         {
-            walk.drawAnimation(g, x,y);
+            walk.drawAnimationLeft(g, x,y);
+        }
+        else if(handler.isRight()){
+            walk.drawAnimationRight(g, x, y);
+        }
+        else if(handler.isUp() || handler.isDown())
+        {
+            walk.drawAnimationRight(g, x, y);
         }
         else{
-            idle.drawAnimation(g, x, y);
+            idle.drawAnimationRight(g, x, y);
         }
     }
 

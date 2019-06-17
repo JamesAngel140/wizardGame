@@ -47,8 +47,13 @@ public class Animation {
         }
     }
 
-    public void drawAnimation(Graphics g, int x, int y)
+    public void drawAnimationRight(Graphics g, int x, int y)
     {
-        g.drawImage(currentImg, x, y, null);
+        g.drawImage(currentImg, x, y, 32,32, null);
     }
+    public void drawAnimationLeft(Graphics g, int x, int y)
+    {
+        g.drawImage(currentImg, x+32, y, -32,32, null);
+    }
+
 }

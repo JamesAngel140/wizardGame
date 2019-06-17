@@ -1,10 +1,21 @@
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.util.Random;
 
 public class Block extends GameObject {
 
+    BufferedImage wall;
+    BufferedImageLoader loader;
 
-    public Block(int x, int y, ID id) {
+
+    public Block(int x, int y, ID id)
+    {
         super(x, y, id);
+        loader = new BufferedImageLoader();
+        Random rand = new Random();
+        int randInt = rand.nextInt(2)+1;
+        wall = loader.loadImage("/tiles/wall/wall_"+randInt+".png");
+
     }
 
     public void tick() {
@@ -12,8 +23,7 @@ public class Block extends GameObject {
     }
 
     public void render(Graphics g) {
-        g.setColor(Color.white);
-        g.fillRect(x,y,32,32);
+        g.drawImage(wall, x, y,32,32, null);
     }
 
     public Rectangle getBounds() {
