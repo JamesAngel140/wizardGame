@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 
 public class Game extends Canvas implements Runnable {
 
+    public int frames;
     private boolean isRunning = false;
     private Thread thread;
     private Handler handler;
@@ -19,7 +20,7 @@ public class Game extends Canvas implements Runnable {
         camera = new Camera(0,0);
         handler = new Handler();
         this.addKeyListener(new KeyInput(handler));
-
+        this.addMouseListener(new MouseInput(handler, camera));
         BufferedImageLoader loader = new BufferedImageLoader();
         level = loader.loadImage("/WizardWorld1.png");
 
@@ -103,13 +104,10 @@ public class Game extends Canvas implements Runnable {
         Graphics g = bs.getDrawGraphics();
         Graphics2D g2d = (Graphics2D) g;
         //////////////////////
-        g.setColor(Color.black);
-        g.fillRect(0, 0, 1000, 563);
-        g2d.translate(-camera.getX(), -camera.getY());
-
-
-
-        handler.render(g);
+        g.setColor(Color.black);//backgound
+        g.fillRect(0, 0, 1000, 563);///background
+        g2d.translate(-camera.getX(), -camera.getY()); //camera
+        handler.render(g); //render all the items in the game
         g2d.translate(camera.getX(), camera.getY());
         ///////////////////////
         g.dispose();
@@ -135,7 +133,7 @@ public class Game extends Canvas implements Runnable {
                     handler.addObject(new Block(xx*32, yy*32, ID.Block));
                 }
                 if(blue == 255) {
-                    handler.addObject(new Wizard(xx * 32, yy * 32, ID.Player, handler));
+                    handler.addObject(new Wizard(xx * 16, yy * 16, ID.Player, handler));
                 }
 
             }

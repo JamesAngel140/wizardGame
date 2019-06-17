@@ -1,12 +1,19 @@
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public class Wizard extends GameObject {
+
+    public Animation idle;
+    public Animation walk;
 
     Handler handler;
 
     public Wizard(int x, int y, ID id, Handler handler) {
         super(x, y, id);
         this.handler = handler;
+        this.idle = new Animation(10,"/knight_idle_spritesheet.png", 6, 16, 16);
+        this.walk = new Animation(10, "/knight_run_spritesheet.png", 6, 16,16);
     }
 
     public void tick() {
@@ -46,14 +53,17 @@ public class Wizard extends GameObject {
         }
     }
 
-    @Override
     public void render(Graphics g) {
-        g.setColor(Color.green);
-        g.fillRect(x,y, 32,32);
+        if(handler.isDown() || handler.isLeft() || handler.isRight() || handler.isUp())
+        {
+            walk.drawAnimation(g, x,y);
+        }
+        else{
+            idle.drawAnimation(g, x, y);
+        }
     }
 
-    @Override
     public Rectangle getBounds() {
-        return new Rectangle(x,y,32,32);
+        return new Rectangle(x,y,16,16);
     }
 }
