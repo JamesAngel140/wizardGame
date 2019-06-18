@@ -8,10 +8,10 @@ public class Block extends GameObject {
     BufferedImageLoader loader;
 
 
-    public Block(int x, int y, ID id)
+    public Block(int x, int y, ID id, BufferedImageLoader loader)
     {
         super(x, y, id);
-        loader = new BufferedImageLoader();
+        this.loader = loader;
         Random rand = new Random();
         int randInt = rand.nextInt(2)+1;
         wall = loader.loadImage("/tiles/wall/wall_"+randInt+".png");
