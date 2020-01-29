@@ -13,7 +13,8 @@ public class Game extends Canvas implements Runnable {
     private Thread thread;
     private Handler handler;
     private Camera camera;
-    private BufferedImage level = null;
+    Level level;
+    private BufferedImage levelImage;
     private Floor floor;
     public BufferedImageLoader loader;
     Random rand;
@@ -29,10 +30,9 @@ public class Game extends Canvas implements Runnable {
         this.addKeyListener(new KeyInput(handler));
         this.addMouseListener(new MouseInput(handler, camera));
         loader = new BufferedImageLoader();
-
-        level = loader.loadImage("/WizardWorld1.png");
-
-        loadLevel(level);
+        levelImage = loader.loadImage("/WizardWorld1.png");
+        level = new Level(handler, loader);
+        level.loadLevel(levelImage);
 
     }
 
@@ -106,7 +106,6 @@ public class Game extends Canvas implements Runnable {
             this.createBufferStrategy(3);
             return;
         }
-
         Graphics g = bs.getDrawGraphics();
         Graphics2D g2d = (Graphics2D) g;
         //////////////////////
@@ -119,26 +118,4 @@ public class Game extends Canvas implements Runnable {
         bs.show();
     }
 
-    private void loadLevel(BufferedImage image) {
-        int w = image.getWidth();
-        int h = image.getHeight();
-
-        for (int xx = 0; xx < w; xx++) {
-            for (int yy = 0; yy < h; yy++) {
-                int pixel = image.getRGB(xx, yy);
-                int red = (pixel >> 16) & 0xff;
-                int green = (pixel >> 8) & 0xff;
-                int blue = (pixel) & 0xff;
-
-                if (red == 255) {
-                    handler.addObject(new Block(xx * 32, yy * 32, ID.Block, loader));
-                }
-                if (blue == 255) {
-                    handler.addObject(new Wizard(xx * 32, yy * 32, ID.Player, handler));
-                }
-
-
-            }
-        }
-    }
 }
